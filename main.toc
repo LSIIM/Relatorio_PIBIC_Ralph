@@ -1,10 +1,30 @@
 \babel@toc {brazil}{}\relax 
 \contentsline {section}{\numberline {1}Introdução}{3}{section.1}%
 \contentsline {section}{\numberline {2}Objetivos}{3}{section.2}%
-\contentsline {section}{\numberline {3}Metodologia}{3}{section.3}%
-\contentsline {section}{\numberline {4}Resultados e Discussão}{4}{section.4}%
-\contentsline {section}{\numberline {5}Atividades Relevantes Desenvolvidas pelo Bolsista}{4}{section.5}%
-\contentsline {section}{\numberline {6}Dificuldades Encontradas}{4}{section.6}%
-\contentsline {section}{\numberline {7}Cronograma de Execução}{4}{section.7}%
-\contentsline {section}{\numberline {8}Considerações <Parciais ou Finais>}{4}{section.8}%
-\contentsline {section}{\numberline {9}Parecer do Orientador}{4}{section.9}%
+\contentsline {section}{\numberline {3}Materiais e Métodos}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Correlação com os múculos da Face}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Experimentos}{4}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Experimento 1 - Analise dos rostos e coleta dos dados de LandMarks}{4}{subsubsection.3.2.1}%
+\contentsline {paragraph}{\numberline {3.2.1.1}Descrição dos Arquivos}{4}{paragraph.3.2.1.1}%
+\contentsline {paragraph}{\numberline {3.2.1.2}Procedimentos}{5}{paragraph.3.2.1.2}%
+\contentsline {paragraph}{\numberline {3.2.1.3}Remoções do Dataset Neste Experimento}{5}{paragraph.3.2.1.3}%
+\contentsline {subparagraph}{\numberline {3.2.1.3.1}Motivo: Número incorreto de fotos em uma pasta do usuário}{5}{subparagraph.3.2.1.3.1}%
+\contentsline {paragraph}{\numberline {3.2.1.4}Exemplo de Máscara gerada com os Landmarks obtidos}{6}{paragraph.3.2.1.4}%
+\contentsline {paragraph}{\numberline {3.2.1.5}Vídeo das Faces e Máscaras}{6}{paragraph.3.2.1.5}%
+\contentsline {subsubsection}{\numberline {3.2.2}Experimento 2 - Processamentos dos Dados Obtidos no Experimento 1}{6}{subsubsection.3.2.2}%
+\contentsline {paragraph}{\numberline {3.2.2.1}Primeira Abordagem - Todos os Pontos (Foi abandonada)}{6}{paragraph.3.2.2.1}%
+\contentsline {subparagraph}{\numberline {3.2.2.1.1}Parte 1}{6}{subparagraph.3.2.2.1.1}%
+\contentsline {subparagraph}{\numberline {3.2.2.1.2}Parte 2}{6}{subparagraph.3.2.2.1.2}%
+\contentsline {paragraph}{\numberline {3.2.2.2}Segunda abordagem - Pontos com alta variação em relação à face neutra}{7}{paragraph.3.2.2.2}%
+\contentsline {paragraph}{\numberline {3.2.2.3}Remoções do dataset}{8}{paragraph.3.2.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3}Experimento 3 - Visualisação dos Dados}{8}{subsubsection.3.2.3}%
+\contentsline {paragraph}{\numberline {3.2.3.1}Gráfcos de PseudoClustering}{8}{paragraph.3.2.3.1}%
+\contentsline {paragraph}{\numberline {3.2.3.2}Analise da distribuição das distancias da segunda abordagem do experimento 2}{8}{paragraph.3.2.3.2}%
+\contentsline {paragraph}{\numberline {3.2.3.3}Cluster com Kmeans dos Pontos acima da Média (PAV)}{8}{paragraph.3.2.3.3}%
+\contentsline {subparagraph}{\numberline {3.2.3.3.1}Expansão dos grupos}{8}{subparagraph.3.2.3.3.1}%
+\contentsline {paragraph}{\numberline {3.2.3.4}Remoções do Dataset}{8}{paragraph.3.2.3.4}%
+\contentsline {subsubsection}{\numberline {3.2.4}Experimento 4 - Cálculo de Correlações}{8}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}Experimento 5 - Testes de Hipóteses}{9}{subsubsection.3.2.5}%
+\contentsline {paragraph}{\numberline {3.2.5.1}pessoa com score mais alto em depressão tende a ter uma media maior das distancias da face neutra pra neutra media dos participantes}{9}{paragraph.3.2.5.1}%
+\contentsline {section}{\numberline {4}Resultados e Discussão}{9}{section.4}%
+\contentsline {section}{\numberline {5}Conclusões}{9}{section.5}%

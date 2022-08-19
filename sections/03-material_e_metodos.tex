@@ -1,0 +1,164 @@
+\section{Materiais e Métodos}
+\label{sec:materiais}
+
+Descrever aqui o que foi feito durante o projeto e colocar o fluxograma.
+Todo o projeto foi desenvolvido e documentado no Github (colocar o link)
+
+\subsection{Correlação com os múculos da Face}
+Aqui foi tentado fazer algumas correlações com os músculos faciais, contudo, ao que foi descoberto no item ?? sobre a analise de exprsssões em vídeos e a alta complexidade dos músculos, foi abandonada esta estratégia e optado por fazer a redução dos dados para otimizar a análise utilizando agrupamento por KMeans descrito no item ??.
+
+\subsection{Experimentos}
+\subsubsection{Experimento 1 - Analise dos rostos e coleta dos dados de LandMarks}
+O objetivo é coletar os dados para que possam ser analisados e correlacionados posteriormente.
+
+Foi analisada cada imagem de cada pessoa em cada uma das expressões e o resultado será salvo na pasta processed da seguinte forma.
+\begin{verbatim}
+.
+├── /processed
+|   |
+|   ├── [id_expressão]
+|   |   |
+|   |   ├── mean_[id_expressão].png (Mascara com triangulos fantas da expressão com fundo branco)
+|   |   ├── [id_supervisionado]
+|   |   |   ├── [id_pessoa]
+|   |   |   |   |
+|   |   |   |   ├── [id_foto].csv (vai conter as posições xy dos landmarks da foto)
+|   |   |   |   ├── [id_foto].jpg (Mascara de triangulos da pessoa com fundo preto pra cada foto)
+|   |   |   |   ├── mean_[id_pessoa].jpg (Mascara de triangulos fantasma da pessoa com fundo branco)
+
+\end{verbatim}
+
+\paragraph{Descrição dos Arquivos}
+\begin{itemize}
+    \item{analyser.py}
+    \subitem{Anda de pasta em pasta do dataset e salva os .csv em processed na pasta raiz do projeto}
+
+    \item{draw\_triangles.py}
+    \subitem{Anda pelas pastas de processed e, a partir dos csv, gera as mascaras e as salva em .jpg no mesmo diretório}
+
+    \item{error\_verifier.py}
+    \subitem{Verifica e exclui as inconsistencias encontradas no dataset, como pastas com numeros equivocados de imagens, e casos nos quais faces não foram reconhecidas}
+
+    \item{face\_mesh.py}
+    \subitem{Uma classe para extrair os pontos da face}
+
+    \item{face\_adjustments.py}
+    \subitem{Faz as transformações na imagem a partir dos pontos extraidos, de acordo com as definições abaixo}
+
+\end{itemize}
+
+\paragraph{Procedimentos}\mbox{}\\
+
+
+
+Para melhor analisar as imagens posteriormente um padrão será adotado, e ele será o seguinte:
+\begin{itemize}
+    \item{Todas as imagens serão rotacionadas para que os olhos fiquem sempre na mesma linha (alignEyes)}
+    \item{O ponto 10 é deixado sempre na altura 25 e no centro da imagem, com a distancia entre o ponto 10 e o ponto 152 sendo de 1500px (alignFace)}
+    \subitem{Colocar aqui uma imagem com as linhas mostrando o tamanho do rosto sendo 1500px}
+    \item{A imagem será recortada em um retangulo, deixando apenas o rosto centralizado, com margem de 25px.}
+    \item{A imagem será deixada com 1900px X 2500px sem redimensionar, apenas colocando bordas pretas nas laterais e em baixo para completar o tamanho}
+    \item{somente então será salva com os dados relativos a imagem no fim deste processo}
+\end{itemize}
+Colocar aqui o bloco do experimento 1 do fluxograma
+
+
+\paragraph{Remoções do Dataset Neste Experimento}\mbox{}\\
+\subparagraph{Motivo: Número incorreto de fotos em uma pasta do usuário}\mbox{}\\
+nos casos em que foi detectado que uma das pastas do usuário continha um numero diferente de 3 fotos, todas as pastas dele foram removidas da analise. Os usuários que esta regra foi aplicada são os que seguem, com as seguintes observações:
+\begin{itemize}
+    \item{00541 - 4 imagens em 00/00}
+    \item{02069 - 11 imagens em 00/00}
+    \item{05669 - 7 imagens em 00/00}
+    \item{06644 - 2 imagens em 00/00}
+\end{itemize}
+
+\paragraph{Exemplo de Máscara gerada com os Landmarks obtidos}\mbox{}\\
+colocar a imagem aqui da mascara com o fundo preto
+
+\paragraph{Vídeo das Faces e Máscaras}\mbox{}\\
+Fui obrigado a colocar o video no drive pois ele acabou ficando ridiculamente pesado (cerca de 4,5gb) O codec utilizado não é suportado pelo reprodutor do windows, abra o video com o VLC que irá ser lido normalmente. O as imagens utilizadas no video tem 1/3 de seu tamanho original, para reduzir o tamanho do mesmo. Deixando-o com a resolução de 1666x633 px
+(colocar o link pro vídeo ou um print dele sla)
+No video as informações estão dispostas da seguinte forma:
+
+\begin{itemize}
+    \item{Na esquerda está o rosto cortado da pessoa}
+    \item{Na direita a máscara extraida deste rosto}
+    \item{no meio estão o tipo/expressão (ids) e o id da pessoa, respectivamente}
+    \item{a cada troca de pasta (tipo ou expressão) é mostrado por 2s uma imagem do novo diretorio com os ids (tipo/expressão)}
+\end{itemize}
+
+
+\subsubsection{Experimento 2 - Processamentos dos Dados Obtidos no Experimento 1}
+O objetivo aqui é tentar encontrar um padrão para os dados obtidos no experimento 1, e fazer um processamento dos dados para que possam ser utilizados no experimento 3.
+
+\paragraph{Primeira Abordagem - Todos os Pontos (Foi abandonada)}\mbox{}\\
+\subparagraph{Parte 1}\mbox{}\\
+Para cada uma das máscaras de um usuário, obter as distâncias de cada ponto desta máscara para sua mascára neutra não supervisionada (00/00). Com esses dados, também gerar distâncias médias para a neutra NS de todos os usuários
+
+\subparagraph{Parte 2}\mbox{}\\
+A partir dos dados gerados na parte 1, que são MUITOS, reduzílos a alguns números que, em teoria, representam a mascara daquela pessoa. Os resultados que serão coletados são os que seguem:
+\begin{itemize}
+    \item{Média de diferença entre as distancias da máscara em análise para todas as distancias da máscara neutra NS média}
+    \subitem{Isso significa que eu tiro a distancia do Ponto X para todos os outros pontos da máscara em análise e faço o mesmo para a másca de referencia, que é a Neutra NS. Tendo esses 2 .csv de 468x486 linhas cada, faço a diferença entre cada uma das relações e coloco em um .csv com 468x486 (isso não é uma matriz, é uma multiplicação msm) linhas}
+    \item{Média de diferença entre as distancias da máscara em análise para todas as distancias da máscara neutra NS média, agrupado por músculos (Ver MuscleCorrelation)}
+    \subitem{Faço a mesma coisa que no item acima, contudo a média será feita por músculos}
+    \item{Média de diferença entre as distancias da máscara em análise para todas as distancias da máscara neutra NS média, agrupado por GRUPOS musculares}
+    \subitem{Faço a mesma coisa que no item acima, contudo a média será feita por grupos musculares}
+\end{itemize}
+
+Todos os dados citados acima serão salvos em .cvs's, de acordo com a relação dos arquivos gerados
+\begin{verbatim}
+.
+├── /processed
+|
+│   ├── /pattern_analysis
+│   |   |
+│   |   ├── /[id_pessoa]
+│   |   |   |
+│   |   |   ├── exp-tp_00-00.csv (A diferença entre cada ponto das expressões para o neutro NS)
+│   |   |   ├── mean-dists_allp-allp.csv (A media de distancia entre cada ponto das expressões para o neutro NS)
+│   |   |   ├── mean-diff-dists_allp-allp.csv (A diferença entre cada ponto das expressões para o neutro NS média)
+\end{verbatim}
+Contudo como foi dito no item ?? foi abandonada a questão de agrupamento de pontos por músculos epor conta disso, foi adotada a abordagem descrita no próximo item.
+
+\paragraph{Segunda abordagem - Pontos com alta variação em relação à face neutra}\mbox{}\\
+Neste experimento apenas serão analisados os pontos e suas contrapartes na expressão neutra. A primeira parte foi calcular a média de distancia de cada ponto de todas as 16 máscaras para a neutra e então selecionei todos os pontos que a distancia é superior a média da máscara em todas as máscaras. 77 pontos foram selecionados
+\newline
+(não sei se é interessante colocar os graficos de distancias de cada uma das mascaras)
+(e eu acho que essa imagem é um resultado, logo nao deveria estar nessa section deveria estar na proxima tb)
+
+\includegraphics[width=0.5\textwidth]{images/pav_mask.png}
+
+Com estes 77 pontos em mão, para cada máscara foi calculada a média deles, criando o arquivo masks\_means\_pav.csv
+pav = points above average
+
+\paragraph{Remoções do dataset}
+\begin{itemize}
+    \item {Usuário 06644: Não fez todas as capturas}
+\end{itemize}
+
+
+
+\subsubsection{Experimento 3 - Visualisação dos Dados}
+\paragraph{Gráfcos de PseudoClustering}\mbox{}\\
+\paragraph{Analise da distribuição das distancias da segunda abordagem do experimento 2}\mbox{}\\
+\paragraph{Cluster com Kmeans dos Pontos acima da Média (PAV)}\mbox{}\\
+Como foram selecionados 77 pontos, houve uma sobrecarga de dados para fazer a analise. Então foi utilizada esta técnica de clusterização para reduzir a quantidade de dados. Os 77 pontos foram dividos em 6 grupos, mostrados na imagem abaixo
+(tb n sei se é aqui que eu dvo colocar a img)
+A relação ponto-grupo esta salvo no arquivo points\_above\_average.csv Para a execução dos testes na secção 04 será utilizada a média de cada de distância de cada ponto
+
+\subparagraph{Expansão dos grupos}\mbox{}\\
+Dois novos grupos serão adicionados para analise arbitrariamente para ser feita uma visualização da relação do tamanho do sorriso com a contração dos olhos, para verificar se o sorriso é, de fato verdadeiro. Esta nova relação de grupos está no arquivo points\_above\_average\_expanded.csv
+
+\paragraph{Remoções do Dataset}\mbox{}\\
+\begin{itemize}
+    \item {02935: Não respondeu aos questionários}
+\end{itemize}
+
+\subsubsection{Experimento 4 - Cálculo de Correlações}
+aqui eu vou escrever depois pq eu não anotei no github...
+\subsubsection{Experimento 5 - Testes de Hipóteses}
+\paragraph{pessoa com score mais alto em depressão tende a ter uma media maior das distancias da face neutra pra neutra media dos participantes}
+isso aqui serviu p testar se os sorrisos eram verdadeiros
+explicar que eu vou fazer o teste com o score bdi e o kmeans expandido pra pegar a contração do olho
