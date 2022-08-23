@@ -1,2 +1,89 @@
 \section{Resultados e Discussão}
 \label{sec:resultados}
+
+\subsection{Máscaras}
+\subsubsection{Máscaras médas por expressão}\mbox{}\\
+\subsubsection{Diferenças entre Supervisionado e Não SUpervisionado}\mbox{}\\
+Notou-se que:
+\begin{itemize}
+    \item Na 05 (Alegria) foi mais comum rostos mais expressivos e com sorrisos maiores na captura \emph{não supervisionada} do que na supervisionada.
+    \item Na 07 (Surpresa) aconteceu o oposto da 05, pois foi mais comum bocas com uma amplitude de abertura maior nas capturas \emph{supervisionadas} do que nas não supervisionadas
+\end{itemize}
+
+\subsubsection{Comparações entre máscaras médias supervisionadas e não supervisionadas}\mbox{}\\
+
+A coluna da esquerda representa as mascaras não supervisionadas e a da direita as supervisionadas. A cada Bloco de imagem são apresentadas 4 imagens sendo duas máscaras "fantasmas" e duas de pontos médios.
+A máscara fantasma apresenta os vetígios de todas as mascaras analisadas simultaneamente, reforcando os pixels onde as linhas mais aparecem.
+A máscara de pontos médios apenas faz uma média das posições x,y de cada um dos landmarks da expressão e dsenha uma máscara a partir disso.
+
+COLOCAR AS IMAGENS AQUI
+
+
+\subsubsection{Distância entre os pontos da expressão Neutra Não Supervisionada}\mbox{}\\
+
+Aqui foram geradas visualizações das máscaras obtendo a distancia entre os landmarks da máscara média de uma dada expressão para a média da Neutra não supervisionada. E para gerar o heatmap foi pintado um triângulo com o valor médio dos 3 vétices que o compoem.
+
+COLOCAR AS IMAGENS AQUI DA ESCALA DINAMICA (ACHO QUE AQUELA COR TA ÓTIMA)
+
+\subsubsection{Grupos Faciais}\mbox{}\\
+Como foi dito no item ?? foram separados 77 pontos cujas distâncias até seu correspondente na neutra NS são maiores que a média do restante de sua máscara.
+Para obter estes pontos foram analisados os seguintes dados aqui representados em gráficos:
+
+COLOCAR OS GRÁFICOS AQUI
+
+E então foram separados nos seguintes pontos destacados em vermelho
+
+COLOCAR A IMAGEM COM OS PONTOS DESTACADOS AQUI (NÃO COLOCAR ELA NO 3)
+
+E conforme foi observado pelo bolsista, a quantidade de dados ainda era absurdamente grande, portanto foi necessário reduzir a quantidade de dados para aumentar a velocidade de processamento. Para tal foi utilizado o método de K-means para reduzir a quantidade de dados. Gerando os seguintes grupos de pontos
+
+COLOCAR A IMAGEM DO KMEANS PADRÃO
+
+\subsection{Correlações Mais Fortes}
+Conforme foi discutido no item ?? os testes de correlação foram feitos utilizando os grupos faciais obtidos pelo método de clusterização Kmeans, e correlacionando-os com os scores dos questionários psiquiátricos descritos no item ??. (é seria legal descrever eles e colocar eles no apendice talvez, ou anexo sla)
+
+Algumas correlações fortes foram encontradas, como a Beck Anxiety Inventory VERSUS Obsessive-Compulsive Inventory, contudo como este tipo de correlação entre scores dos questionários ja foi amplamente discutido na literatura, não foi dispendido tempo para analisá-los.
+
+As melhores crrelações obtidas foram:
+
+
+\begin{itemize}
+    \item Grupo 02 da Alegria não supervisionada VERSUS Adult Self-Report Scale (Hiperatividade)
+    \begin{itemize}
+        \item spearmanr
+            \subitem pvalue = 0.0001702527593707
+            \subitem rvalue = 0.2122881902011349
+        \item pearsonr
+            \subitem pvalue = 6.888895152022905e-05
+            \subitem rvalue = 0.2244339895379587
+    \end{itemize}
+\item Grupo 02 da Alegria supervisionada VERSUS Adult Self-Report Scale (Hiperatividade)
+    \begin{itemize}
+        \item spearmanr
+            \subitem pvalue = 0.0003732745538004
+            \subitem rvalue = 0.2011662537681749
+        \item pearsonr
+            \subitem pvalue = 0.0043378892933926
+            \subitem rvalue = 0.1618568566694145
+    \end{itemize}
+\end{itemize}
+
+
+\subsection{Problema de Aquisição}
+
+\subsubsection{Testes}\mbox{}\\
+
+Para avaliar a hipótese de que um sorriso verdadeiro contrai os olhos e que pessoas com score alto no DBI não expressam sorrisos tão fortes, foi criado mais 2 grupos faciais arbitrarios na mascara, apresentados abaixo:
+
+COLOCAR KMEANS EXPANDIDO AQUI
+
+Com isso, seria possivel verificar a média de distância do grupo 5 com o grupo 6 e do grupo 1 com o grupo 7. Assim, seria esperado encontrar dados como o exemplo abaixo:
+
+COLOCAR O GRAFICO esperado
+
+Contudo o que foi encontado foi:
+
+COLOCAR UNS PRINTS E LINKS PROS HTML INTERATIVOS
+
+E observando os gráficos nota-se que não condiz com o que era esperado, portanto pode-se inferir que a coleta criou este erro ou a premissa da hipótese era falsa.
+Além disso, para a analise de expressões faciais é necessário que hajam videos da expressão surgindo e se dissipando (buscar referencia disso)
